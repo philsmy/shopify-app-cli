@@ -44,6 +44,21 @@ module Script
             cause_of_error: "Your .shopify-cli.yml file is not correct.",
             help_suggestion: "See https://help.shopify.com/en/",
           }
+        when Errors::NoExistingAppsError
+          {
+            cause_of_error: "You don't have any apps.",
+            help_suggestion: "Please create an app with `shopify create app` or visit https://partners.shopify.com/.",
+          }
+        when Errors::NoExistingOrganizationsError
+          {
+            cause_of_error: "You don't have any organizations.",
+            help_suggestion: "Please visit https://partners.shopify.com/ to create a partners account.",
+          }
+        when Errors::NoExistingStoresError
+          {
+            cause_of_error: "You don't have any development stores.",
+            help_suggestion: "Visit https://partners.shopify.com/#{e.organization_id}/stores/ to create one.",
+          }
         when Errors::ScriptProjectAlreadyExistsError
           {
             cause_of_error: "Directory with the same name as the script already exists.",
@@ -58,10 +73,38 @@ module Script
           {
             cause_of_error: "Couldn't find script #{e.script_name} for extension point #{e.extension_point_type}",
           }
+        when Layers::Infrastructure::Errors::AppNotInstalledError
+          {
+            cause_of_error: "App not installed on development store.",
+          }
+        when Layers::Infrastructure::Errors::BuildError
+          {
+            cause_of_error: "Something went wrong while building the script.",
+            help_suggestion: "Correct the errors and try again.",
+          }
         when Layers::Infrastructure::Errors::DependencyInstallError
           {
             cause_of_error: "Something went wrong while installing the dependencies that are needed.",
             help_suggestion: "See https://help.shopify.com/en/",
+          }
+        when Layers::Infrastructure::Errors::ForbiddenError
+          {
+            cause_of_error: "You do not have permission to do this action.",
+          }
+        when Layers::Infrastructure::Errors::GraphqlError
+          {
+            cause_of_error: "An error was returned: #{e.errors.join(', ')}.",
+            help_suggestion: "\nReview the error and try again.",
+          }
+        when Layers::Infrastructure::Errors::ScriptRedeployError
+          {
+            cause_of_error: "Script with the same extension point already exists on app (API key: #{e.api_key}).",
+            help_suggestion: "Use {{cyan:--force}} to replace the existing script.",
+          }
+        when Layers::Infrastructure::Errors::ShopAuthenticationError
+          {
+            cause_of_error: "Unable to authenticate with the store.",
+            help_suggestion: "Try again.",
           }
         when Layers::Infrastructure::Errors::TestError
           {
