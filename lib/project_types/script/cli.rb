@@ -6,6 +6,7 @@ module Script
     creator 'Script', 'Script::Commands::Create'
 
     register_command('Script::Commands::Deploy', 'deploy')
+    register_command('Script::Commands::Enable', 'enable')
     register_command('Script::Commands::Test', 'test')
   end
 
@@ -13,6 +14,7 @@ module Script
   module Commands
     autoload :Create, Project.project_filepath('commands/create')
     autoload :Deploy, Project.project_filepath('commands/deploy')
+    autoload :Enable, Project.project_filepath('commands/enable')
     autoload :Test, Project.project_filepath('commands/test')
   end
 
@@ -20,6 +22,7 @@ module Script
   module Forms
     autoload :Create, Project.project_filepath('forms/create')
     autoload :Deploy, Project.project_filepath('forms/deploy')
+    autoload :Enable, Project.project_filepath('forms/enable')
     autoload :ScriptForm, Project.project_filepath('forms/script_form')
   end
 
@@ -28,6 +31,7 @@ module Script
       autoload :BuildScript, Project.project_filepath('layers/application/build_script')
       autoload :CreateScript, Project.project_filepath('layers/application/create_script')
       autoload :DeployScript, Project.project_filepath('layers/application/deploy_script')
+      autoload :EnableScript, Project.project_filepath('layers/application/enable_script')
       autoload :ExtensionPoints, Project.project_filepath('layers/application/extension_points')
       autoload :ProjectDependencies, Project.project_filepath('layers/application/project_dependencies')
       autoload :TestScript, Project.project_filepath('layers/application/test_script')

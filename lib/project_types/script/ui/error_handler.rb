@@ -77,6 +77,10 @@ module Script
           {
             cause_of_error: "App not installed on development store.",
           }
+        when Layers::Infrastructure::Errors::AppScriptUndefinedError
+          {
+            help_suggestion: "Deploy script to app.",
+          }
         when Layers::Infrastructure::Errors::BuildError
           {
             cause_of_error: "Something went wrong while building the script.",
@@ -106,6 +110,12 @@ module Script
             cause_of_error: "Unable to authenticate with the store.",
             help_suggestion: "Try again.",
           }
+        when Layers::Infrastructure::Errors::ShopScriptConflictError
+          {
+            cause_of_error: "Another app in this store has already enabled a script on this extension point.",
+            help_suggestion: "Disable that script or uninstall that app and try again.",
+          }
+
         when Layers::Infrastructure::Errors::TestError
           {
             help_suggestion: "Correct the errors and try again.",

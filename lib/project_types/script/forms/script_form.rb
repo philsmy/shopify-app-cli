@@ -20,7 +20,7 @@ module Script
 
       def ask_app_api_key(ctx, apps, message: 'Which app do you want this script to belong to?')
         if apps.count == 0
-          raise NoExistingAppsError
+          raise Errors::NoExistingAppsError
         elsif apps.count == 1
           ctx.puts("Using app {{green:#{apps.first['title']} (#{apps.first['apiKey']})}}.")
           apps.first["apiKey"]
@@ -33,7 +33,7 @@ module Script
 
       def ask_organization(ctx)
         if organizations.count == 0
-          raise NoExistingOrganizationsError
+          raise Errors::NoExistingOrganizationsError
         elsif organizations.count == 1
           ctx.puts("Organization {{green:#{organizations.first['businessName']}}}.")
           organizations.first
@@ -42,6 +42,18 @@ module Script
             organizations.each { |o| handler.option(o['businessName']) { o['id'] } }
           end
           organizations.find { |o| o['id'] == org_id }
+        end
+      end
+
+      def ask_shop_domain(ctx, organization, message: 'Select a development store')
+        if organization['stores'].count == 0
+          raise Errors::NoExistingStoresError, organization['id']
+        elsif organization['stores'].count == 1
+          domain = organization['stores'].first['shopDomain']
+          ctx.puts("Using development store {{green:#{domain}}}")
+          domain
+        else
+          CLI::UI::Prompt.ask(message, options: organization["stores"].map { |s| s["shopDomain"] })
         end
       end
     end
