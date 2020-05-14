@@ -259,4 +259,3 @@ module Node
     end
   end
 end
-
