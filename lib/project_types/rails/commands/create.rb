@@ -86,7 +86,7 @@ module Rails
             syscall(%w(spring stop))
           rescue
           end
-          syscall(%w(rails generate shopify_app))
+          syscall(%w(rails _5.2.4.2_ generate shopify_app))
         end
 
         CLI::UI::Frame.open(@ctx.message('rails.create.running_migrations')) do
